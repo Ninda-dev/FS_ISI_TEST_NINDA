@@ -1,1 +1,5 @@
 @import "tailwindcss";
+
+.bg-sky-blue {
+  background-color: #6ecbfe;
+}

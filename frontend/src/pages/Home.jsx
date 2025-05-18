@@ -6,7 +6,7 @@ export default function Home() {
 
   return (
     <>
-      <h1 className="text-3xl font-medium" style={{ textAlign: "center" }}>
+      <h1 className="text-3xl font-medium my-4" style={{ textAlign: "center" }}>
         Task Management
       </h1>
       <div className="w-1/3 mx-auto min-h-screen flex flex-col justify-items-center align-items-start">
@@ -31,7 +31,7 @@ export default function Home() {
                   </button>
                 </>
               ) : (
-                <button type="button" className="rounded-xl bg-blue-400 hover:text-white items-center px-4 py-1">
+                <button type="button" className="rounded-xl bg-sky-blue hover:text-white items-center px-4 py-1">
                   Add Task
                 </button>
               )}
