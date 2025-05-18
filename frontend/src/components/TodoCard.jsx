@@ -30,7 +30,7 @@ export default function TodoCard() {
           <div className="flex justify-between items-center rounded-lg bg-gray-200 w-full px-4 py-4">
             <div className="flex flex-col">
               <div className="flex flex-row items-baseline gap-2">
-                <label htmlFor="" className="text-sm">
+                <label htmlFor="" className="text-sm line-through">
                   Tugas 2
                 </label>
                 <Pencil strokeWidth={3} className="w-3 h-3"/>
