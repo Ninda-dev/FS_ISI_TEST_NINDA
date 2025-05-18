@@ -1,3 +1,30 @@
 
+# Lingkungan Virtual
+venv/
+.env/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 
-venv
+.env
+
+# File Python Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# File Log
+*.log
+
+# File Database
+*.sqlite3
+
+# File Konfigurasi Editor
+.vscode/
+.idea/
+
+# File Sistem
+.DS_Store
+Thumbs.db
