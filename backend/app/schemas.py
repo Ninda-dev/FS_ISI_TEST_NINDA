@@ -4,7 +4,6 @@ from datetime import datetime
 
 class TaskBase(BaseModel):
     title: str
-    description: Optional[str] = None
 
 class TaskCreate(TaskBase):
     pass

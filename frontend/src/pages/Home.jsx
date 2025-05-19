@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import TodoCard from "../components/TodoCard";
 
 export default function Home() {
   const [isUpdate, setIsUpdate] = useState(false);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/tasks?is_done=false");
+        const data = await response.json();
+        // console.log("Data>>>>>", data);
+        setTasks(data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <>
@@ -39,7 +55,7 @@ export default function Home() {
           </div>
         </form>
 
-        <TodoCard />
+        <TodoCard tasks={tasks}/>
       </div>
     </>
   );
