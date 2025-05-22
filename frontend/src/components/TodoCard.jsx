@@ -2,6 +2,7 @@ import { Circle, CircleCheck, CircleX, Pencil } from "lucide-react";
 import PropTypes from "prop-types";
 import { formatDate } from "../utils/formatDate";
 import { useState } from "react";
+import { API_BASE_URL } from "../utils/apiBase";
 
 export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTasks, fetchCompletedTasks, onEditTask}) {
   const [hoveredId, setHoveredId] = useState(null);
@@ -12,7 +13,7 @@ export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTas
 
     const fetchUpdateTask = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/tasks/${task.id}`, {
+        const response = await fetch(`${API_BASE_URL}/tasks/${task.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -22,6 +23,7 @@ export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTas
             id: task.id,
             is_done: true,
           }),
+          mode: "cors",
         });
 
         if (!response.ok) {
@@ -48,8 +50,9 @@ export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTas
           return;
         }
 
-        const response = await fetch(`http://localhost:8000/tasks/${taskId}`, {
+        const response = await fetch(`${API_BASE_URL}/tasks/${taskId}`, {
           method: "DELETE",
+          mode: "cors",
         });
 
         if (!response.ok) {
@@ -71,39 +74,40 @@ export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTas
     <>
       <div>
         {/* ongoing tasks */}
-        <div className="sm:col-span-4 w-full mb-4 gap-4">
+        <div className="w-full mb-4 gap-4">
           <label className="block font-bold text-gray-900 my-4">Ongoing Task</label>
           {ongoingTasks.length === 0 && (
             <div className="flex justify-center items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2">
-              <label htmlFor="" className="text-sm">
-                No ongoing tasks
-              </label>
+              <label className="text-sm">No ongoing tasks</label>
             </div>
           )}
           {ongoingTasks.length > 0 && (
             <>
               {ongoingTasks.map((task) => {
                 return (
-                  <div className="flex justify-between items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2">
-                    <div className="flex flex-col">
+                  <div
+                    key={task.id}
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2 gap-2"
+                  >
+                    <div className="flex flex-col w-full sm:w-auto">
                       <div className="flex flex-row items-baseline gap-2">
-                        <label htmlFor="" className="text-sm">
-                          {task.title}
-                        </label>
-                        <Pencil strokeWidth={3} className="w-3 h-3" onClick={() => onEditTask(task)}/>
+                        <label className="text-sm">{task.title}</label>
+                        <Pencil strokeWidth={3} className="w-3 h-3" onClick={() => onEditTask(task)} />
                       </div>
-                      <label htmlFor="" className="text-xs">
-                        {formatDate(task.created_at)}
-                      </label>
+                      <label className="text-xs">{formatDate(task.created_at)}</label>
                     </div>
-                    <div className="flex flex-row gap-2">
+                    <div className="flex flex-row gap-2 mt-2 sm:mt-0">
                       <CircleX
                         onClick={() => {
                           handleDelete(task.id);
                         }}
                       />
                       <span onMouseEnter={() => setHoveredId(task.id)} onMouseLeave={() => setHoveredId(null)}>
-                        {hoveredId === task.id ? <CircleCheck fill="white" className="text-green-500" onClick={() => handleUpdate(task)} /> : <Circle fill="white" />}
+                        {hoveredId === task.id ? (
+                          <CircleCheck fill="white" className="text-green-500" onClick={() => handleUpdate(task)} />
+                        ) : (
+                          <Circle fill="white" />
+                        )}
                       </span>
                     </div>
                   </div>
@@ -118,28 +122,25 @@ export default function TodoCard({ ongoingTasks, completedTasks, fetchOngoingTas
           <label className="block font-bold text-gray-900">Completed Task</label>
           {completedTasks.length === 0 && (
             <div className="flex justify-center items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2">
-              <label htmlFor="" className="text-sm">
-                No completed tasks
-              </label>
+              <label className="text-sm">No completed tasks</label>
             </div>
           )}
           {completedTasks.length > 0 && (
             <>
               {completedTasks.map((task) => {
                 return (
-                  <div className="flex justify-between items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2">
-                    <div className="flex flex-col">
+                  <div
+                    key={task.id}
+                    className="flex flex-col sm:flex-row justify-between items-start sm:items-center rounded-lg bg-gray-200 w-full px-4 py-4 my-2 gap-2"
+                  >
+                    <div className="flex flex-col w-full sm:w-auto">
                       <div className="flex flex-row items-baseline gap-2">
-                        <label htmlFor="" className="text-sm">
-                          {task.title}
-                        </label>
-                        <Pencil strokeWidth={3} className="w-3 h-3" onClick={() => onEditTask(task)}/>
+                        <label className="text-sm">{task.title}</label>
+                        <Pencil strokeWidth={3} className="w-3 h-3" onClick={() => onEditTask(task)} />
                       </div>
-                      <label htmlFor="" className="text-xs">
-                        {formatDate(task.created_at)}
-                      </label>
+                      <label className="text-xs">{formatDate(task.created_at)}</label>
                     </div>
-                    <div className="flex flex-row gap-2">
+                    <div className="flex flex-row gap-2 mt-2 sm:mt-0">
                       <CircleX
                         onClick={() => {
                           handleDelete(task.id);

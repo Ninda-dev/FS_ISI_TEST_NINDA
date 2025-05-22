@@ -26,5 +26,17 @@ services:
     volumes:
       - ./backend/app:/app/app
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: todo_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+    depends_on:
+      - backend
+      
 volumes:
   db-data:
